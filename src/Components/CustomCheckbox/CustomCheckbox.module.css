@@ -1,0 +1,23 @@
+input.default_checkbox {
+  position: absolute;
+}
+
+.checkbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: auto;
+  display: none;
+}
+
+input.default_checkbox:checked ~ .checkbox .checkmark {
+  display: block;
+}

@@ -1,11 +1,35 @@
+import cn from "clsx";
 import { FC } from "react";
+import { TiDelete } from "react-icons/ti";
 import { ITask } from "../../../types/task.interface";
-
-const Task: FC<ITask> = ({ id, title, isDone }) => {
+import CustomCheckbox from "../../CustomCheckbox/CustomCheckbox";
+type TypeData = ITask & {
+  toggleDone: (id: number) => void;
+  deleteTask: (id: number) => void;
+};
+const Task: FC<TypeData> = ({ id, title, isDone, toggleDone, deleteTask }) => {
   return (
-    <div>
-      <input type="checkbox" name="Done" id="" />
-      <h1>{title}</h1>
+    <div className="flex justify-between items-center border-b border-black px-5 py-2">
+      <div className="flex items-baseline gap-4">
+        <div className="" onClick={() => toggleDone(id)}>
+          <CustomCheckbox isDone={isDone} />
+        </div>
+        <h1
+          className={cn("text-3xl font-light", {
+            "line-through text-gray-400": isDone,
+          })}
+        >
+          {title}
+        </h1>
+      </div>
+      <div
+        className=""
+        onClick={() => {
+          deleteTask(id);
+        }}
+      >
+        <TiDelete size={28} />
+      </div>
     </div>
   );
 };
