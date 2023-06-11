@@ -1,57 +1,25 @@
 import { FC, useState } from "react";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { ITask } from "../../types/task.interface";
+import useTasks from "../../hooks/useTasks";
+import Filter from "../Filter/Filter";
 import Task from "./Task/Task";
 
-type TypeData = {
-  tasks: ITask[];
-};
-
 const TaskList: FC = () => {
+  const {
+    addNewTask,
+    deleteTask,
+    filter,
+    setFilter,
+    filteredTasks,
+    toggleDone,
+    clear,
+  } = useTasks();
   const [value, setValue] = useState<string>("");
-  const [tasks, setTasks] = useLocalStorage<ITask[]>("tasks", []);
-
-  const addNewTask = (value: string) => {
-    const newTask: ITask = {
-      id: tasks[0] ? tasks[tasks.length - 1].id + 1 : 0,
-      isDone: false,
-      title: value,
-    };
-    const copy = [...tasks];
-    copy.push(newTask);
-    setTasks(copy);
-    setValue("");
-  };
-
-  const deleteTask = (id: number) => {
-    const copy = tasks.filter((task) => task.id !== id);
-    setTasks(copy);
-  };
-
-  const toggleDone = (id: number) => {
-    const copy = [...tasks];
-    const current = copy.find((item) => item.id === id);
-    if (current) {
-      current.isDone = !current.isDone;
-    }
-    setTasks(copy);
-  };
-
-  const filterTask = (condition: string) => {
-    switch (condition) {
-      case "active":
-        const activeTasks = tasks.filter((task) => task.isDone === false);
-        setTasks(activeTasks);
-        break;
-      case "completed":
-        const completedTasks = tasks.filter((task) => task.isDone === true);
-        setTasks(completedTasks);
-        break;
-      default:
-        setTasks(tasks);
+  const handleAddNewTask = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      addNewTask(value);
+      setValue("");
     }
   };
-
   return (
     <>
       <input
@@ -60,10 +28,10 @@ const TaskList: FC = () => {
         onChange={(e) => setValue(e.target.value)}
         className="border border-b w-full py-2 px-5 bg-transparent italic outline-none"
         placeholder="What needs to be done?"
-        onKeyDown={(e) => (e.key === "Enter" ? addNewTask(value) : null)}
+        onKeyDown={(e) => handleAddNewTask(e)}
       />
       <div className="flex flex-col-reverse ">
-        {tasks.map((task) => {
+        {filteredTasks.map((task) => {
           return (
             <Task
               key={task.id}
@@ -75,6 +43,16 @@ const TaskList: FC = () => {
             />
           );
         })}
+      </div>
+      <div className="p-4 flex justify-between items-center">
+        <div className="">{filteredTasks.length} items</div>
+        <Filter activeFilter={filter} setFilter={setFilter} />
+        <div
+          className="border border-black rounded-lg px-3 py-1 hover:bg-slate-300 transition-all hover:cursor-pointer"
+          onClick={clear}
+        >
+          Clear
+        </div>
       </div>
     </>
   );
