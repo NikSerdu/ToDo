@@ -1,24 +1,20 @@
 import { FC, useState } from "react";
-import useTasksActions from "../../hooks/useTasksActions";
-import { ITask } from "../../types/task.interface";
+import useTasks from "../../hooks/useTasks";
 import Filter from "../Filter/Filter";
 import Task from "./Task/Task";
 
-type TypeData = {
-  tasks: ITask[];
-};
-
 const TaskList: FC = () => {
-  const [value, setValue] = useState<string>("");
   const {
     addNewTask,
-    clear,
     deleteTask,
-    filterTasks,
+    filter,
+    setFilter,
     filteredTasks,
     toggleDone,
-  } = useTasksActions();
-  const changeInput = (e: any) => {
+    clear,
+  } = useTasks();
+  const [value, setValue] = useState<string>("");
+  const handleAddNewTask = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       addNewTask(value);
       setValue("");
@@ -32,7 +28,7 @@ const TaskList: FC = () => {
         onChange={(e) => setValue(e.target.value)}
         className="border border-b w-full py-2 px-5 bg-transparent italic outline-none"
         placeholder="What needs to be done?"
-        onKeyDown={(e) => changeInput(e)}
+        onKeyDown={(e) => handleAddNewTask(e)}
       />
       <div className="flex flex-col-reverse ">
         {filteredTasks.map((task) => {
@@ -48,11 +44,11 @@ const TaskList: FC = () => {
           );
         })}
       </div>
-      <div className=" flex gap-4 p-2 items-center justify-between">
+      <div className="p-4 flex justify-between items-center">
         <div className="">{filteredTasks.length} items</div>
-        <Filter onClick={filterTasks} />
+        <Filter activeFilter={filter} setFilter={setFilter} />
         <div
-          className="px-2 py-0.5 border border-black rounded-lg hover:cursor-pointer hover:bg-slate-200 transition-all"
+          className="border border-black rounded-lg px-3 py-1 hover:bg-slate-300 transition-all hover:cursor-pointer"
           onClick={clear}
         >
           Clear
