@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "jest-localstorage-mock": "^2.4.26",
     "tailwindcss": "^3.3.2"
   }
 }

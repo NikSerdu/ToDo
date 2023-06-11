@@ -15,7 +15,7 @@ const TaskList: FC = () => {
   } = useTasks();
   const [value, setValue] = useState<string>("");
   const handleAddNewTask = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && value.replace(/\s/g, "") !== "") {
       addNewTask(value);
       setValue("");
     }

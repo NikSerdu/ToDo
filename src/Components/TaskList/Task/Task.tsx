@@ -11,7 +11,11 @@ const Task: FC<TypeData> = ({ id, title, isDone, toggleDone, deleteTask }) => {
   return (
     <div className="flex justify-between items-center border-b border-black px-5 py-2">
       <div className="flex items-baseline gap-4">
-        <div className="" onClick={() => toggleDone(id)}>
+        <div
+          className=""
+          data-testid={`toggle${id + 1}`}
+          onClick={() => toggleDone(id)}
+        >
           <CustomCheckbox isDone={isDone} />
         </div>
         <h1
@@ -23,6 +27,7 @@ const Task: FC<TypeData> = ({ id, title, isDone, toggleDone, deleteTask }) => {
         </h1>
       </div>
       <div
+        data-testid={`deleteTask${id + 1}`}
         className=""
         onClick={() => {
           deleteTask(id);

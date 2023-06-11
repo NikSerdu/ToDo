@@ -8,16 +8,15 @@ const useTasks = () => {
 
   const addNewTask = (value: string) => {
     const newTask: ITask = {
-      id: tasks[0] ? tasks[tasks.length - 1].id + 1 : 0,
+      id: tasks && tasks.length ? tasks[tasks.length - 1].id + 1 : 0,
       isDone: false,
       title: value,
     };
-    setTasks([...tasks, newTask]);
+    setTasks((prevTasks) => [...(prevTasks || []), newTask]);
   };
 
   const deleteTask = (id: number) => {
-    const copy = tasks.filter((task) => task.id !== id);
-    setTasks(copy);
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
   const toggleDone = (id: number) => {
@@ -45,13 +44,12 @@ const useTasks = () => {
     const copy = tasks.filter((task) => {
       return !filteredTasks.some((filteredTask) => task.id === filteredTask.id);
     });
-    console.log(copy);
-
     setTasks(copy);
   };
 
   useEffect(() => {
-    const tasks = JSON.parse(localStorage.getItem("tasks") as string);
+    const tasksString = localStorage.getItem("tasks");
+    const tasks = tasksString ? JSON.parse(tasksString) : [];
     setTasks(tasks);
   }, []);
 
@@ -71,6 +69,7 @@ const useTasks = () => {
     toggleDone,
     filteredTasks,
     clear,
+    tasks,
   };
 };
 
