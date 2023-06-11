@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { ITask } from "../types/task.interface";
-
 const useTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [filter, setFilter] = useState<"All" | "Completed" | "Active">("All");
@@ -45,6 +45,16 @@ const useTasks = () => {
       return !filteredTasks.some((filteredTask) => task.id === filteredTask.id);
     });
     setTasks(copy);
+    toast.success("Успешно очищено!", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
 
   useEffect(() => {

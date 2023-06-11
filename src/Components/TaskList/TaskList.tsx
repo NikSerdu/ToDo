@@ -1,8 +1,9 @@
 import { FC, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useTasks from "../../hooks/useTasks";
 import Filter from "../Filter/Filter";
 import Task from "./Task/Task";
-
 const TaskList: FC = () => {
   const {
     addNewTask,
@@ -18,10 +19,35 @@ const TaskList: FC = () => {
     if (e.key === "Enter" && value.replace(/\s/g, "") !== "") {
       addNewTask(value);
       setValue("");
+    } else if (e.key === "Enter" && value.replace(/\s/g, "") === "") {
+      toast.error("Введите задачу!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
       <input
         type="text"
         value={value}
