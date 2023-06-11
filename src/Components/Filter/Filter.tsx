@@ -1,32 +1,36 @@
 import cn from "clsx";
-import { FC, useState } from "react";
-const filters = [
+import { FC } from "react";
+const filters: IFilter[] = [
   { id: 0, text: "All" },
   { id: 1, text: "Active" },
   { id: 2, text: "Completed" },
 ];
 
+interface IFilter {
+  id: number;
+  text: "All" | "Completed" | "Active";
+}
+
 type TypeData = {
-  onClick: (conditional: string) => void;
+  activeFilter: "All" | "Completed" | "Active";
+  setFilter: (filter: "All" | "Completed" | "Active") => void;
 };
 
-const Filter: FC<TypeData> = ({ onClick }) => {
-  const [activeFilter, setActiveFilter] = useState("All");
+const Filter: FC<TypeData> = ({ activeFilter, setFilter }) => {
   return (
     <div className="flex gap-4">
       {filters.map((filter) => {
         return (
           <div
             className={cn(
-              "px-2 py-0.5 border border-black rounded-lg hover:cursor-pointer hover:bg-slate-200 transition-all",
+              "border border-black rounded-lg px-3 py-1 hover:bg-slate-300 transition-all hover:cursor-pointer",
               {
                 "bg-slate-400": activeFilter === filter.text,
               }
             )}
             key={filter.id}
             onClick={() => {
-              onClick(filter.text);
-              setActiveFilter(filter.text);
+              setFilter(filter.text);
             }}
           >
             {filter.text}
