@@ -9,7 +9,7 @@ type TypeData = ITask & {
 };
 const Task: FC<TypeData> = ({ id, title, isDone, toggleDone, deleteTask }) => {
   return (
-    <div className="flex justify-between items-center border-b border-black px-5 py-2">
+    <div className="flex justify-between items-baseline border-b border-black px-5 py-2">
       <div className="flex items-baseline gap-4">
         <div
           className=""
@@ -19,7 +19,7 @@ const Task: FC<TypeData> = ({ id, title, isDone, toggleDone, deleteTask }) => {
           <CustomCheckbox isDone={isDone} />
         </div>
         <h1
-          className={cn("text-3xl font-light", {
+          className={cn("text-3xl font-light break-all", {
             "line-through text-gray-400": isDone,
           })}
         >

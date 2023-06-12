@@ -70,7 +70,7 @@ const TaskList: FC = () => {
           );
         })}
       </div>
-      <div className="p-4 flex justify-between items-center">
+      <div className="p-4 flex justify-between items-center max-[425px]:flex-col max-[425px]:gap-3">
         <div className="">{filteredTasks.length} items</div>
         <Filter activeFilter={filter} setFilter={setFilter} />
         <div

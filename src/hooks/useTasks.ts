@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ITask } from "../types/task.interface";
 const useTasks = () => {
-  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [tasks, setTasks] = useState<ITask[]>(() => {
+    const storedValue = localStorage.getItem("tasks");
+    return storedValue ? JSON.parse(storedValue) : [];
+  });
   const [filter, setFilter] = useState<"All" | "Completed" | "Active">("All");
   const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
 
@@ -12,7 +15,7 @@ const useTasks = () => {
       isDone: false,
       title: value,
     };
-    setTasks((prevTasks) => [...(prevTasks || []), newTask]);
+    setTasks((prevTasks) => [...prevTasks, newTask]);
   };
 
   const deleteTask = (id: number) => {
@@ -56,12 +59,6 @@ const useTasks = () => {
       theme: "light",
     });
   };
-
-  useEffect(() => {
-    const tasksString = localStorage.getItem("tasks");
-    const tasks = tasksString ? JSON.parse(tasksString) : [];
-    setTasks(tasks);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
