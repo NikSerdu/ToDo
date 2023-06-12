@@ -46,15 +46,17 @@ const TaskList: FC = () => {
         pauseOnHover
         theme="light"
       />
-      {/* Same as */}
-      <ToastContainer />
       <input
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setValue(e.target.value)
+        }
         className="border border-b w-full py-2 px-5 bg-transparent italic outline-none"
         placeholder="What needs to be done?"
-        onKeyDown={(e) => handleAddNewTask(e)}
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+          handleAddNewTask(e)
+        }
       />
       <div className="flex flex-col-reverse ">
         {filteredTasks.map((task) => {
