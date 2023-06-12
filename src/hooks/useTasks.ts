@@ -44,20 +44,35 @@ const useTasks = () => {
   };
 
   const clear = () => {
-    const copy = tasks.filter((task) => {
-      return !filteredTasks.some((filteredTask) => task.id === filteredTask.id);
-    });
-    setTasks(copy);
-    toast.success("Успешно очищено!", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    if (filteredTasks.length > 0) {
+      const copy = tasks.filter((task) => {
+        return !filteredTasks.some(
+          (filteredTask) => task.id === filteredTask.id
+        );
+      });
+      setTasks(copy);
+      toast.success("Successfully cleared!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast.warning("There is nothing to clean!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
 
   useEffect(() => {

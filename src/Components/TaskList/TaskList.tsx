@@ -20,7 +20,7 @@ const TaskList: FC = () => {
       addNewTask(value);
       setValue("");
     } else if (e.key === "Enter" && value.replace(/\s/g, "") === "") {
-      toast.error("Введите задачу!", {
+      toast.error("Enter the task!", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,

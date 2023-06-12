@@ -1,7 +1,7 @@
 {
   "name": "todo",
   "version": "0.1.0",
-  "homepage": "https://nikserdu.github.io/todo",
+  "homepage": "https://nikserdu.github.io/ToDo",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
